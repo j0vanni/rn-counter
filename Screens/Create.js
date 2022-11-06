@@ -62,10 +62,21 @@ class Create extends React.Component {
     const { navigation } = this.props;
 
     const storeData = async (value) => {
+      let currDate = new Date().toISOString().slice(0, 10);
+
+      let sortArr = this.state.dates.sort();
+      for (let i = 0; i < sortArr.length; i++) {
+        if (Date.parse(currDate) > Date.parse(sortArr[i])) {
+          sortArr.splice(i, 1);
+        }
+      }
       try {
-        let sortArr = this.state.dates.sort();
-        const stringedArray = JSON.stringify(sortArr);
-        await AsyncStorage.setItem(this.state.title, stringedArray);
+        if (currDate > sortArr[sortArr.length - 1]) {
+          Alert.alert("Please put future dates.");
+        } else {
+          const stringedArray = JSON.stringify(sortArr);
+          await AsyncStorage.setItem(this.state.title, stringedArray);
+        }
       } catch (e) {
         Alert.alert("Event name must be more than 1 character.");
         console.log(e);

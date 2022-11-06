@@ -126,9 +126,15 @@ class Edit extends React.Component {
     const { navigation } = this.props;
     const storeData = async (value) => {
       let currDate = new Date().toISOString().slice(0, 10);
+
+      let sortArr = this.state.dates.sort();
+      for (let i = 0; i < sortArr.length; i++) {
+        if (Date.parse(currDate) > Date.parse(sortArr[i])) {
+          sortArr.splice(i, 1);
+        }
+      }
       try {
-        let sortArr = this.state.dates.sort();
-        if (currDate > sortArr[sortArr.length - 1]) {
+        if (currDate > sortArr[sortArr.length - 1] || sortArr.length === 0) {
           Alert.alert("Please put future dates.");
         } else {
           const stringedArray = JSON.stringify(sortArr);
