@@ -8,7 +8,7 @@ class Card extends React.Component {
 
     return (
       <TouchableOpacity
-        style={styles.card}
+        style={[styles.card, { backgroundColor: this.props.color }]}
         onPress={() => navigation.navigate("Edit", { itemName: this.props.fT })}
       >
         <Text style={styles.dayText}>{this.props.dT} days</Text>
@@ -64,6 +64,7 @@ export default function (props) {
       dT={props.dT}
       fT={props.fT}
       date={props.date}
+      color={props.color}
     />
   );
 }
